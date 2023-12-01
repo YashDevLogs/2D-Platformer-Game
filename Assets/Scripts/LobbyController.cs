@@ -17,7 +17,7 @@ public class LobbyController : MonoBehaviour
     private void playGame()
     {
         LevelSelection.SetActive(true);
-        //SceneManager.LoadScene(1);
+        
     }
 
     private void OnApplicationQuit()
