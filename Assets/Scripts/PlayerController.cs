@@ -17,6 +17,14 @@ public class PlayerController : MonoBehaviour
     public float MaxHeart = 3;
     public float currentHearts;
     private bool isHurt = false;
+    public GameObject gameWonPanel;
+    public float speed;
+    public float Jump;
+    private Rigidbody2D rb;
+    public float groundCheckRadius = 0.4f;
+    private bool isGrounded;
+    public LayerMask groundLayer;
+    public Transform groundCheck;
 
 
 
@@ -51,8 +59,6 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public GameObject gameWonPanel;
-
 
     private void OnTriggerEnter2D(Collider2D other)
     {
@@ -68,8 +74,6 @@ public class PlayerController : MonoBehaviour
             }
         }
     }
-
-
 
     void LoseHeart()
     {
@@ -103,22 +107,12 @@ public class PlayerController : MonoBehaviour
 
     }
 
- 
-
-    public float speed;
-    public float Jump;
 
     public void PickUpKey()
     {
         Debug.Log("Key Picked Up!!");
         scoreController.IncreaseScore(20);
     }
-
-    private Rigidbody2D rb;
-    public float groundCheckRadius = 0.4f;
-    private bool isGrounded;
-    public LayerMask groundLayer;
-    public Transform groundCheck;
 
 
     private void Awake()
@@ -132,8 +126,6 @@ public class PlayerController : MonoBehaviour
         currentHearts = MaxHeart;
         animator = GetComponent<Animator>();
 
-
-
     }
 
     void Update()
@@ -141,23 +133,22 @@ public class PlayerController : MonoBehaviour
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundLayer);
         float horizontal = Input.GetAxisRaw("Horizontal");
      
-
         MoveCharacter(horizontal);
-
-
         PlayerCrouchAnimation();
-
         PlayerJumpAnimation();
-
         PlayerMovementAnimation(horizontal);
 
 
 
         void MoveCharacter(float horizontal)
         {
+
             Vector3 position = transform.position;
             position.x = position.x +horizontal * speed * Time.deltaTime;
-            transform.position = position;   
+            transform.position = position;
+
+
+            
             
         }
 
@@ -168,10 +159,14 @@ public class PlayerController : MonoBehaviour
             if (horizontal < 0)
             {
                 scale.x = -1f * Mathf.Abs(scale.x);
+                SoundManager.Instance.play(Sounds.PlayerMove);
+
             }
             else if (horizontal > 0)
             {
                 scale.x = Mathf.Abs(scale.x);
+
+                SoundManager.Instance.play(Sounds.PlayerMove);
             }
             transform.localScale = scale;
         }

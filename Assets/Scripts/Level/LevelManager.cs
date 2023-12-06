@@ -44,7 +44,7 @@ public class LevelManager : MonoBehaviour
 
         int currentSceneIndex =  Array.FindIndex(Levels, level => level == currentScene.name);
         int nextSceneIndex = currentSceneIndex + 1;
-        if(nextSceneIndex <= Levels.Length)
+        if(nextSceneIndex < Levels.Length + 1)
         {
             SetLevelStatus(Levels[nextSceneIndex], LevelStatus.Unlocked);
             Debug.Log("Next level unlocked");
