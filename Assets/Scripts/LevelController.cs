@@ -5,12 +5,18 @@ using UnityEngine.SceneManagement;
 
 public class LevelController : MonoBehaviour
 {
+    public GameObject Gamewonpanel;
     private void OnTriggerEnter2D(Collider2D collision)
     {
        if (collision.gameObject.GetComponent<PlayerController>()!=null)
         {
-            Debug.Log("Level Completed!!");
-            NextLevel();
+
+            Gamewonpanel.SetActive(true);
+            LevelManager.Instance.MarkCurrentLevelComplete();
+
+
+/*            NextLevel();*/
+
         }
     }
 
