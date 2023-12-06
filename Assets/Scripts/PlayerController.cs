@@ -51,6 +51,26 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    public GameObject gameWonPanel;
+
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("GameWon"))
+        {
+            // Assuming "WinningObject" is the tag of the trigger object for winning the game.
+            Debug.Log("Game Won!");
+
+            // Enable the Game Won panel
+            if (gameWonPanel != null)
+            {
+                gameWonPanel.SetActive(true);
+            }
+        }
+    }
+
+
+
     void LoseHeart()
     {
         currentHearts--;
