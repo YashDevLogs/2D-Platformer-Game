@@ -166,7 +166,7 @@ public class PlayerController : MonoBehaviour
             {
                 scale.x = Mathf.Abs(scale.x);
 
-                SoundManager.Instance.play(Sounds.PlayerMove);
+
             }
             transform.localScale = scale;
         }

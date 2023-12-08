@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 public class LevelController : MonoBehaviour
 {
     public GameObject Gamewonpanel;
+    public ParticleSystem GameWonEffect;
 
   
     private void OnTriggerEnter2D(Collider2D collision)
@@ -14,7 +15,9 @@ public class LevelController : MonoBehaviour
         {
 
             Gamewonpanel.SetActive(true);
+            SoundManager.Instance.playMusic(Sounds.NewLevel);
             LevelManager.Instance.MarkCurrentLevelComplete();
+            GameWonEffect.Play();
 
 
 /*            NextLevel();*/
