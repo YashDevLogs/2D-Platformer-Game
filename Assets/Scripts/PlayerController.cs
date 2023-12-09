@@ -25,7 +25,11 @@ public class PlayerController : MonoBehaviour
     private bool isGrounded;
     public LayerMask groundLayer;
     public Transform groundCheck;
+    private int jumpsRemaining;
+    public int maxJumps = 2;
 
+
+    
 
 
     public void KillPlayer()
@@ -125,7 +129,7 @@ public class PlayerController : MonoBehaviour
         playerCollider = GetComponent<BoxCollider2D>();
         currentHearts = MaxHeart;
         animator = GetComponent<Animator>();
-
+        jumpsRemaining = maxJumps;
     }
 
     void Update()
@@ -159,7 +163,6 @@ public class PlayerController : MonoBehaviour
             if (horizontal < 0)
             {
                 scale.x = -1f * Mathf.Abs(scale.x);
-                SoundManager.Instance.play(Sounds.PlayerMove);
 
             }
             else if (horizontal > 0)
@@ -194,18 +197,35 @@ public class PlayerController : MonoBehaviour
         void PlayerJumpAnimation()
         {
 
-            if (Input.GetKeyDown(KeyCode.W) && isGrounded)
+            if (Input.GetKeyDown(KeyCode.W) && (isGrounded || jumpsRemaining > 0))
             {
                 animator.SetBool("Jump", true);
+                rb.velocity = new Vector2(rb.velocity.x, 0f); // Reset vertical velocity before jump
                 rb.AddForce(new Vector2(0f, Jump), ForceMode2D.Impulse);
+                jumpsRemaining--;
             }
-            else
+            else if (jumpsRemaining == 0 && isGrounded)
+            {
+                animator.SetBool("Jump", false);
+                jumpsRemaining = maxJumps;
+            }
+            else 
             {
                 animator.SetBool("Jump", false);
             }
         }
 
+        
+    }
 
+    public void EnableWalkingSound()
+    {
+        SoundManager.Instance.play(Sounds.PlayerMove);
+    }
+
+    public void EnableJumpingSound()
+    {
+        SoundManager.Instance.play(Sounds.PlayerJump);
     }
 }
  

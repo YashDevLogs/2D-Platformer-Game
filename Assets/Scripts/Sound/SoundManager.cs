@@ -60,12 +60,10 @@ public class SoundManager : MonoBehaviour
             SoundEffect.PlayOneShot(clip);
         else
         {
-            Debug.Log("clip not found: " + sound); 
+            Debug.Log("clip not found: " + sound);
         }
-
-
-
     }
+
 
     public void Mute(bool status)
     {
@@ -108,6 +106,7 @@ public enum Sounds
     EnemyDeath,
     KeyPickup,
     NewLevel,
-    LevelOver
+    LevelOver,
+    PlayerJump
 
 }
