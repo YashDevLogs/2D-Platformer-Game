@@ -26,10 +26,12 @@ public class LevelLoader : MonoBehaviour
                 break;
 
             case LevelStatus.Unlocked:
+                SoundManager.Instance.play(Sounds.ButtonClick);
                 SceneManager.LoadScene(LevelName);
                 break;
 
             case LevelStatus.Completed:
+                SoundManager.Instance.play(Sounds.ButtonClick);
                 SceneManager.LoadScene(LevelName);
                 break;
         }

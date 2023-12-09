@@ -17,7 +17,19 @@ public class PlayerController : MonoBehaviour
     public float MaxHeart = 3;
     public float currentHearts;
     private bool isHurt = false;
+    public GameObject gameWonPanel;
+    public float speed;
+    public float Jump;
+    private Rigidbody2D rb;
+    public float groundCheckRadius = 0.4f;
+    private bool isGrounded;
+    public LayerMask groundLayer;
+    public Transform groundCheck;
+    private int jumpsRemaining;
+    public int maxJumps = 2;
 
+
+    
 
 
     public void KillPlayer()
@@ -51,8 +63,6 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public GameObject gameWonPanel;
-
 
     private void OnTriggerEnter2D(Collider2D other)
     {
@@ -68,8 +78,6 @@ public class PlayerController : MonoBehaviour
             }
         }
     }
-
-
 
     void LoseHeart()
     {
@@ -103,22 +111,12 @@ public class PlayerController : MonoBehaviour
 
     }
 
- 
-
-    public float speed;
-    public float Jump;
 
     public void PickUpKey()
     {
         Debug.Log("Key Picked Up!!");
         scoreController.IncreaseScore(20);
     }
-
-    private Rigidbody2D rb;
-    public float groundCheckRadius = 0.4f;
-    private bool isGrounded;
-    public LayerMask groundLayer;
-    public Transform groundCheck;
 
 
     private void Awake()
@@ -131,9 +129,7 @@ public class PlayerController : MonoBehaviour
         playerCollider = GetComponent<BoxCollider2D>();
         currentHearts = MaxHeart;
         animator = GetComponent<Animator>();
-
-
-
+        jumpsRemaining = maxJumps;
     }
 
     void Update()
@@ -141,23 +137,22 @@ public class PlayerController : MonoBehaviour
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundLayer);
         float horizontal = Input.GetAxisRaw("Horizontal");
      
-
         MoveCharacter(horizontal);
-
-
         PlayerCrouchAnimation();
-
         PlayerJumpAnimation();
-
         PlayerMovementAnimation(horizontal);
 
 
 
         void MoveCharacter(float horizontal)
         {
+
             Vector3 position = transform.position;
             position.x = position.x +horizontal * speed * Time.deltaTime;
-            transform.position = position;   
+            transform.position = position;
+
+
+            
             
         }
 
@@ -168,10 +163,13 @@ public class PlayerController : MonoBehaviour
             if (horizontal < 0)
             {
                 scale.x = -1f * Mathf.Abs(scale.x);
+
             }
             else if (horizontal > 0)
             {
                 scale.x = Mathf.Abs(scale.x);
+
+
             }
             transform.localScale = scale;
         }
@@ -199,18 +197,35 @@ public class PlayerController : MonoBehaviour
         void PlayerJumpAnimation()
         {
 
-            if (Input.GetKeyDown(KeyCode.W) && isGrounded)
+            if (Input.GetKeyDown(KeyCode.W) && (isGrounded || jumpsRemaining > 0))
             {
                 animator.SetBool("Jump", true);
+                rb.velocity = new Vector2(rb.velocity.x, 0f); // Reset vertical velocity before jump
                 rb.AddForce(new Vector2(0f, Jump), ForceMode2D.Impulse);
+                jumpsRemaining--;
             }
-            else
+            else if (jumpsRemaining == 0 && isGrounded)
+            {
+                animator.SetBool("Jump", false);
+                jumpsRemaining = maxJumps;
+            }
+            else 
             {
                 animator.SetBool("Jump", false);
             }
         }
 
+        
+    }
 
+    public void EnableWalkingSound()
+    {
+        SoundManager.Instance.play(Sounds.PlayerMove);
+    }
+
+    public void EnableJumpingSound()
+    {
+        SoundManager.Instance.play(Sounds.PlayerJump);
     }
 }
  

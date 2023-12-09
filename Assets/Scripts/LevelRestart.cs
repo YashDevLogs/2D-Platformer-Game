@@ -5,14 +5,19 @@ using UnityEngine.SceneManagement;
 
 public class LevelRestart : MonoBehaviour
 {
+    public GameOverController gameOverController;
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.GetComponent<PlayerController>()!=null)
+        if (collision.gameObject.GetComponent<PlayerController>() != null)
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
             Debug.Log("Level Restarted");
-            HealthManager.Health = 3;
+            HealthManager.Health--;
 
+            if (HealthManager.Health == 0)
+            {
+                gameOverController.PlayerDied();
+            }
         }
     }
 }

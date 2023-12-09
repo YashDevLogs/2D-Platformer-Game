@@ -16,6 +16,7 @@ public class LobbyController : MonoBehaviour
 
     private void playGame()
     {
+        SoundManager.Instance.play(Sounds.ButtonClick);
         LevelSelection.SetActive(true);
         
     }

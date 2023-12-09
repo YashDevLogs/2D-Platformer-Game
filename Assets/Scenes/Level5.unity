@@ -24174,6 +24174,16 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1041272593}
     m_Modifications:
+    - target: {fileID: 638674328002750253, guid: cbe9ceaf774fc0c459e9b24f894ecc0f,
+        type: 3}
+      propertyPath: m_text
+      value: Game Completed !!
+      objectReference: {fileID: 0}
+    - target: {fileID: 3416308514128302437, guid: cbe9ceaf774fc0c459e9b24f894ecc0f,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 900
+      objectReference: {fileID: 0}
     - target: {fileID: 5324181453670177093, guid: cbe9ceaf774fc0c459e9b24f894ecc0f,
         type: 3}
       propertyPath: m_Pivot.x
@@ -24274,6 +24284,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8018799433366777542, guid: cbe9ceaf774fc0c459e9b24f894ecc0f,
+        type: 3}
+      propertyPath: NextLevel
+      value: 
+      objectReference: {fileID: 175721951}
     - target: {fileID: 8706319114119126408, guid: cbe9ceaf774fc0c459e9b24f894ecc0f,
         type: 3}
       propertyPath: m_Name
@@ -24290,7 +24305,8 @@ PrefabInstance:
       value: GameWon
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 5076887426351400932, guid: cbe9ceaf774fc0c459e9b24f894ecc0f, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cbe9ceaf774fc0c459e9b24f894ecc0f, type: 3}

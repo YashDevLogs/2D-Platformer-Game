@@ -34,6 +34,7 @@ public class GameWonController : MonoBehaviour
 
     public void nextLevel()
     {
+
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
 
     }
